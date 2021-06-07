@@ -10,8 +10,6 @@ int state = 0;
 void setup() {
     
 Particle.subscribe("ultrasonic_Sensor",Led_Handler);
-// subscribe to the HC-SR04 sensor. Name is MEGR3171_IOTGROUP18_ParkingSensor 
-// The handler name is used below for the void loop. Make sure name is identical. 
 
 Serial.begin(9600);
 
@@ -35,7 +33,7 @@ void Led_Handler(const char *event, const char *data)
        digitalWrite(led,LOW);
     }
     else if (strcmp(data,"Close")==0) {
-        // if the object is less than 60 cm awaywhich is clos turn board LED on
+        // if the object is less than 50 cm awaywhich is clos turn board LED on
         digitalWrite(led,HIGH);
        
     // }
