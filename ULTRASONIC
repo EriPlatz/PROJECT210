@@ -1,0 +1,45 @@
+// This #include statement was added once the library was added
+//adding library to work with the sensor
+///SOURCE CODE => Loucks, C., Byng, W. and Sensor, D., 2021. DIY Parking Sensor. [online] Particle Projects. Available at: <https://particle.hackster.io/iot-group-18/diy-parking-sensor-accdbe> [Accessed 5 June 2021].
+#include <HC_SR04.h>
+
+// define pin where it is pinned
+#define HCSR04_PIN_TRIG	D2
+#define HCSR04_PIN_ECHO	D7
+
+// int sound = 0;
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+ 
+  pinMode(HCSR04_PIN_TRIG, OUTPUT);
+  pinMode(HCSR04_PIN_ECHO, INPUT);
+ 
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  //create to long for the time that it takes and distance
+  long timeTaken, distance;
+  digitalWrite(HCSR04_PIN_TRIG, LOW);
+  delayMicroseconds(2);
+  digitalWrite(HCSR04_PIN_TRIG, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(HCSR04_PIN_TRIG, LOW);
+  timeTaken = pulseIn(HCSR04_PIN_ECHO, HIGH);//determine distance of wave
+  distance = (timeTaken/2)/29.1;//using timeTaken calc distance of object
+
+  /*determine corressponding leds to light up with respect to the distance
+  of object*/
+    
+    
+    //to determine if the distance is less than x= 60 cm in this case then publish Close
+    if(distance<=50){
+       Particle.publish("ultrasonic_Sensor","Close",PUBLIC);
+    }
+    else{
+      Particle.publish("ultrasonic_Sensor","Safe",PUBLIC);
+      }
+    delay(1000);
+   }
