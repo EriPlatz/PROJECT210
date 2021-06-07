@@ -1,0 +1,46 @@
+// This #include statement was automatically added by the Particle IDE.
+//SOURCE CODE => Loucks, C., Byng, W. and Sensor, D., 2021. DIY Parking Sensor. [online] Particle Projects. Available at: <https://particle.hackster.io/iot-group-18/diy-parking-sensor-accdbe> [Accessed 5 June 2021].
+#include <HC_SR04.h>
+
+int led = D7;
+int state = 0;
+
+
+
+void setup() {
+    
+Particle.subscribe("ultrasonic_Sensor",Led_Handler);
+// subscribe to the HC-SR04 sensor. Name is MEGR3171_IOTGROUP18_ParkingSensor 
+// The handler name is used below for the void loop. Make sure name is identical. 
+
+Serial.begin(9600);
+
+pinMode(led, OUTPUT);
+digitalWrite(led, LOW);
+
+}
+
+
+void loop () { 
+// Nothing happens for this sketch
+}
+
+void Led_Handler(const char *event, const char *data)
+{
+   digitalWrite(led,HIGH);
+   
+    if (strcmp(data,"Safe")==0) {
+        
+        // if the obj is within a safe distance  turn board LED and buzzer off
+       digitalWrite(led,LOW);
+    }
+    else if (strcmp(data,"Close")==0) {
+        // if the object is less than 60 cm awaywhich is clos turn board LED on
+        digitalWrite(led,HIGH);
+       
+    // }
+    // else {
+      
+    }
+    delay(1000);
+}
